@@ -60,6 +60,10 @@ namespace Calculator
                     int intValue = Convert.ToInt32(value);
                     result.Text = ConvertToBinary(intValue);
                     break;
+                case "Decimal":
+                    int binaryValue = Convert.ToInt32(value);
+                    result.Text = ConvertToDecimal(binaryValue);
+                    break;
                 case "sqrt":
                     result.Text = Math.Sqrt(value).ToString();
                     break;
