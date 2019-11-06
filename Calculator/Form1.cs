@@ -14,22 +14,23 @@ namespace Calculator
     {
         double value = 0;
         string operation = "";
-        bool operation_pressed = false;
+        bool operationPressed = false;
+       // bool operationStatus = false;
         public Claculator()
         {
             InitializeComponent();
         }
         private void button_Click(object sender, EventArgs e)
         {
-            if (result.Text == "0" || (operation_pressed))
+            if (operationPressed)
                 result.Clear();
             Button b = (Button)sender;
             result.Text = result.Text + b.Text;
-            operation_pressed = false;
+            operationPressed = false;
         }
         private void buttonCE_Click(object sender, EventArgs e)
         {
-            result.Text = "0";
+            result.Text = "";
         }
 
         private void Operator_Click(object sender, EventArgs e)
@@ -37,7 +38,8 @@ namespace Calculator
             Button b = (Button)sender;
             operation = b.Text;
             value = double.Parse(result.Text);
-            operation_pressed = true;
+            operationPressed = true;
+
         }
 
         private void Equal_Operation(object sender, EventArgs e)
@@ -56,6 +58,9 @@ namespace Calculator
                 case "*":
                     result.Text = (value * double.Parse(result.Text)).ToString();
                     break;
+                case "pow":
+                    result.Text = Math.Pow(value, double.Parse(result.Text)).ToString();
+                    break;
                 case "Binary":
                     int intValue = Convert.ToInt32(value);
                     result.Text = ConvertToBinary(intValue);
@@ -71,24 +76,27 @@ namespace Calculator
                     result.Text = (value*value).ToString();
                     break;
                 case "AND":
-                    int andValue1 = Convert.ToInt32(value);
-                    int andValue2 = Convert.ToInt32(result.Text);
-                    result.Text = (andValue1 & andValue2).ToString();
+                    var andValue1 = Convert.ToByte(value);
+                    var andValue2 = Convert.ToByte(result.Text);
+                    var andResult= (andValue1 & andValue2);
+                    result.Text = andResult.ToString();
                     break;
                 case "OR":
-                    int orValue1 = Convert.ToInt32(value);
-                    int orValue2 = Convert.ToInt32(result.Text);
-                    result.Text = (orValue1 | orValue2).ToString();
+                    var orValue1 = Convert.ToByte(value);
+                    var orValue2 = Convert.ToByte(result.Text);
+                    var orResult = (orValue1 | orValue2);
+                    result.Text = orResult.ToString();
                     break;
                 case "XOR":
-                    int xorValue1 = Convert.ToInt32(value);
-                    int xorValue2 = Convert.ToInt32(result.Text);
-                    result.Text = (xorValue1 ^ xorValue2).ToString();
+                    var xorValue1 = Convert.ToByte(value);
+                    var xorValue2 = Convert.ToByte(result.Text);
+                    var xorResult = (xorValue1 ^ xorValue2);
+                    result.Text = xorResult.ToString();
                     break;
                 default:
                     break;
             }
-            operation_pressed = false;
+            operationPressed = false;
         }
 
         private void buttonClear_Click(object sender, EventArgs e)
@@ -97,10 +105,6 @@ namespace Calculator
             value = 0;
         }
 
-        private void button6_Click(object sender, EventArgs e)
-        {
-
-        }
         public string ConvertToBinary(int number)
         {
             var result = "";
@@ -127,6 +131,7 @@ namespace Calculator
             }
             return decimalValue.ToString();
         }
+
 
     }
 }
